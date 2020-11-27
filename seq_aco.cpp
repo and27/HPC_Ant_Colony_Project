@@ -147,7 +147,7 @@ float pseudoEuclideanDistance(int x1, int x2, int y1, int y2) {
 
 void constructTSP(std::string graph, cityType *cities, EdgeMatrix *dist) {
   // Load cities from file
-  std::ifstream infile((graph + ".tsp").c_str());
+  std::ifstream infile(("instances/"+graph + ".tsp").c_str());
   std::string line;
   bool euclidean = true; // whether to run EUC_2D or ATT distance metric
 
@@ -191,6 +191,7 @@ void constructTSP(std::string graph, cityType *cities, EdgeMatrix *dist) {
       (*dist)[to][from] = edge_dist;
     }
   }
+  printf("Graph constructed!\n");
 }
 
    
@@ -211,12 +212,19 @@ int bestSolution(){
 int main(int argc, char *argv[]){
   
   cityType cities[MAX_NODES];
+  if (argc < 2){
+    printf ("Ussage: seq intance_name");
+  return -1;
+  }
   string graph = argv[1];
   EdgeMatrix *dist = new EdgeMatrix();
   //float *dist = new float[MAX_NODES * MAX_NODES];
   constructTSP(graph, cities, dist);
+  printf("Lets initialize the program with MAX_ANTS=%d and MAX_ITERATIONS=%d\n", MAX_ANTS, MAX_ITERATIONS);
+  
   init();
   for (int i =0; i<MAX_ITERATIONS; i++){
+    printf("Executing generation %d\n", i);	  
     //For each tour we run the following actions and -- > Update Pheromone to improve the next tour	  
     for (int ant = 0; ant < MAX_ANTS; ant++){
       while (antColony[ant].pathIndex < MAX_NODES){
