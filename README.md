@@ -8,5 +8,7 @@
 
 `mpirun -n 4 ./a.out rl1889`
 
-If you want to run with a different instance your first need to configure the ants.h file with the max nodes = to the instance size
-According to the instance coordinates, if you have integers as your instance coordinates, then you need to set int x and int y in the ants.h and in the parallel_aco construct tsp function
+To select a different tsp instance, modify the MAX_NODES number according to the instance size in ants.h.
+The algorithm parameters (alpha, beta, rho, qval, iterations) can be modified in ants.h.
+Depending on the coordinate format of the instance you can configure the type of coordinate (x,y) in cityType in ants.h and in parllel_aco.cpp as int or double. 
+
